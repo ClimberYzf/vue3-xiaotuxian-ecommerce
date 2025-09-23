@@ -4,6 +4,7 @@
 import LayoutFooter from './components/LayoutFooter.vue'
 import LayoutNav from './components/LayoutNav.vue'
 import LayoutHeader from './components/LayoutHeader.vue'
+import LayoutFixed from './components/LayoutFixed.vue'
 </script>
 
 <template>
@@ -12,6 +13,8 @@ import LayoutHeader from './components/LayoutHeader.vue'
         下面是二级路由出口
         <RouterView />
     </div> -->
+    <!-- 因为是吸顶导航组件，所以在最顶端 -->
+    <LayoutFixed />
     <LayoutNav />
     <LayoutHeader />
     <RouterView />
