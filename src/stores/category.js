@@ -12,7 +12,7 @@ export const useCategoryStore = defineStore('category', () => {
     const getCategory = async () => {
         //封装是因为通常发送接口之前做些额外的处理
         const res = await getCategoryAPI()        
-        categroyList.value = res.result
+        categoryList.value = res.result
         //拿到数据后的处理
     }
 
