@@ -1,11 +1,17 @@
 <script setup>
-//不用接口请求，改用本地数据
+//M1.接口请求
 // import {getCategoryAPI} from '@/apis/layout'
-import {categoryData} from '@/mock/category'
+
+//M2.不用接口请求，改用本地数据
+import {categoryData} from '@/mock/category' 
 import { onMounted, ref } from 'vue'
+
+//M3.
+import { useCategoryStore } from '@/stores/category'
+
 const categoryList = ref([]) 
 
-//接口请求
+//M1.接口请求
 // const getCategory = async () => {
 //     //封装是因为通常发送接口之前做些额外的处理
 //     const res = await getCategoryAPI()
@@ -13,9 +19,11 @@ const categoryList = ref([])
 //     categroyList.value = res.result
 //     //拿到数据后的处理
 // }
+//M3.用pinia中的数据，避免M1的重复接口请求
+const categoryStore = useCategoryStore()
 
 
-//初始化数据（替代接口请求）
+//M2.初始化数据（替代接口请求）
 const initCategory = () => {
     categoryList.value = categoryData.result
     console.log(categoryList.value)
@@ -23,16 +31,23 @@ const initCategory = () => {
 
 //选择一个生命周期函数调用，如常用的onMounted
 onMounted( () => {
-    // getCategory()
+    //M1.
+    //getCategory()
+    //M2.
     initCategory();
 })
 </script>
 <template>
-    <ul class="app-header-nav">                
-                <li class="home" v-for="item in categoryList" :key="item.id">
-                    <RouterLink to="/">{{  item.name }}</RouterLink>
-                </li>
-            </ul>
+    <ul class="app-header-nav">           
+        <!-- M3.Pinia的数据 -->
+        <!-- <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+            <RouterLink to="/">{{  item.name }}</RouterLink>
+        </li> -->
+
+        <li class="home" v-for="item in categoryList" :key="item.id">
+            <RouterLink to="/">{{  item.name }}</RouterLink>
+        </li>
+    </ul>
 </template>
 <style scoped lang="scss">
 .app-header-nav {
