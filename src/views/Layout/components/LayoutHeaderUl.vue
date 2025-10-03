@@ -26,6 +26,7 @@ const categoryStore = useCategoryStore()
 //M2.初始化数据（替代接口请求）
 const initCategory = () => {
     categoryList.value = categoryData.result
+    console.log('打印LayoutHeaderUl的categoryList.value：')
     console.log(categoryList.value)
 };
 

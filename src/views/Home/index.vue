@@ -12,10 +12,13 @@
         <HomeBanner />
     </div>
     <HomeNew />
+    <!-- <HomeHot /> -->
+    竟然是在视口内，多加几个组件后发现，有的组件就不在视口内了，所以懒加载功能算实现了。
+    <HomeNew />
     <HomeHot />
     <HomeProduct />
     <!-- 测试面板组件 -->
-    <HomePanel title="新鲜好物" sub-title="新鲜好物 每日必推">
+    <!-- <HomePanel title="新鲜好物" sub-title="新鲜好物 每日必推">
         <div>
             我是新鲜好物的插槽
         </div>
@@ -24,5 +27,5 @@
         <div>
             我是人气推荐的插槽
         </div>
-    </HomePanel>
+    </HomePanel> -->
 </template>

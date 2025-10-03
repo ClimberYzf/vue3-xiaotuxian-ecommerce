@@ -4,9 +4,10 @@ import {getBannerAPI} from '@/apis/home'
 const bannerList = ref([])
 const getBanner = async ()=>{
     const res = await getBannerAPI()
-    console.log(res)
-    console.log(res.data.result)
-    console.log(res.data.result)
+    // console.log('打印HomeBanner的res: ')
+    // console.log(res)
+    // console.log(res.data.result)
+    // console.log(res.data.result)
     bannerList.value = res.data.result
 }
 onMounted(()=>getBanner())
