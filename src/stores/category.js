@@ -11,8 +11,10 @@ export const useCategoryStore = defineStore('category', () => {
     // 接口请求
     const getCategory = async () => {
         //封装是因为通常发送接口之前做些额外的处理
-        const res = await getCategoryAPI()        
-        categoryList.value = res.result
+        const res = await getCategoryAPI()     
+        // console.log("category.js里没有拿到数据吗？res.data.result：",res.data.result)  
+        //原来是少写了.data 
+        categoryList.value = res.data.result
         //拿到数据后的处理
     }
 

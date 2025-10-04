@@ -14,6 +14,7 @@ const categoryStore = useCategoryStore()
 
 onMounted(() => {
     categoryStore.getCategory()
+    console.log('index.vue中触发。categoryStore.categoryList', categoryStore.categoryList)
 })
 </script>
 
