@@ -42,7 +42,7 @@ onMounted( () => {
     <ul class="app-header-nav">           
         <!-- M3.Pinia的数据 -->
         <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
-            <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+            <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
 
         <!-- <li class="home" v-for="item in categoryList" :key="item.id">
@@ -75,10 +75,10 @@ onMounted( () => {
                 }
             }
 
-            // .active {
-            //     color: $xtxColor;
-            //     border-bottom: 1px solid $xtxColor;
-            // }
+            .active {
+                color: $xtxColor;
+                border-bottom: 1px solid $xtxColor;
+            }
   }
 }
 </style>
