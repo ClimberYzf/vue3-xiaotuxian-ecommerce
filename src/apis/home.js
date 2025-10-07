@@ -1,7 +1,17 @@
 import httpInstance from "@/utils/http"
-export function getBannerAPI() {
+
+//获取banner
+//给参数 params 设置了默认值 {}，如果没有传递参数，params 就会是一个空对象，避免了因 params 为 undefined 而导致后续解构赋值出错。
+export function getBannerAPI(params={}) {
+    //投放位置distributionSite默认为1，商品为2
+    //如果 params 中没有 distributionSite 属性，distributionSite 就会使用默认值 '1'。
+    const {distributionSite='1'} = params
     return httpInstance({
-        url: '/home/banner'
+        url: '/home/banner', 
+        //这里的 params 是 axios 中用于传递查询字符串参数的配置项，和上面的params仅名称相同，但作用域不同所以不冲突。
+        params: {
+            distributionSite
+        }
     }
     )
 }

@@ -2,6 +2,7 @@
 import {getCategoryAPI} from '@/apis/category'
 import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import {getBannerAPI} from '@/apis/home'
 
 const categoryData = ref({}) //后端返回的是对象
 const route = useRoute()  //专门用来获取路由参数的实例
@@ -11,17 +12,34 @@ const getCategory = async () => {
     categoryData.value = res.data.result
 }
 onMounted(() => getCategory())
+
+const bannerList = ref([])
+const getBanner = async ()=>{
+    const res = await getBannerAPI()
+    bannerList.value = res.data.result
+}
+onMounted(()=>getBanner())
+
 </script>
 
 <template>
     <div class="top-category">
         <div class="container m-top-20">
+            <!-- 面包屑导航 -->
             <div class="bread-container">
                 <el-breadcrumb separator=">">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
+            <!-- 轮播图 -->
+             <div class="home-banner">
+      <el-carousel height="500px">
+        <el-carousel-item v-for="item in bannerList" :key="item.id">
+          <img :src="item.imgUrl" alt="">
+        </el-carousel-item>
+      </el-carousel>
+    </div> 
         </div>
     </div>
 </template>
