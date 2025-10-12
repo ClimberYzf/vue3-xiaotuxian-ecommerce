@@ -29,6 +29,26 @@ const getGoodList = async () => {
 }
 onMounted(()=> getGoodList())
 
+//tab切换回调
+const tabChange = () => {
+  console.log('tab切换了', reqData.value.sortField)
+  reqData.value.page = 1
+  getGoodList()
+}
+
+//加载更多-无限滚动
+const disabled = ref(false)
+const load = async () => {
+  console.log('加载更多')
+  reqData.value.page ++
+  const res = await getSubCategoryAPI(reqData.value)
+  goodList.value = [...goodList.value, ...res.data.result.items]
+  //加载完毕，停止监听
+  //看后端是否有字段（属性）表示是否还有数据，没有这样的字段就用items.length === 0
+  if (res.data.result.items.length === 0){
+     disabled.value = true
+  }  
+}
 
 </script>
 <template>
@@ -43,12 +63,15 @@ onMounted(()=> getGoodList())
     </div>
     <div class="sub-container">
         <!-- el-tabs是标签面板组件 -->
-      <el-tabs>
+         <!-- v-model双向绑定.v-model=被选中的el-tab-pane的name属性值-->
+          <!-- tab-change事件是activeName 改变时触发 -->
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
+        <!-- 下方name的3种取值是根据接口文档给出的参数写的 -->
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body" >
+      <div class="body" v-infinite-scroll="load"  :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
         <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
       </div>
