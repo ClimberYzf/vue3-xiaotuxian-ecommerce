@@ -1,15 +1,41 @@
 <script setup>
+import {getDetail} from '@/apis/detail'
+import {ref, onMounted } from 'vue'
+import {useRoute} from 'vue-router'
+
+const detailData = ref({})
+const route = useRoute()
+// console.log("详情页")
+// console.log("de：",route.params.id)
+const getDetailData = async () => {
+  const res = await getDetail(route.params.id)
+  // console.log("详情的res：",res)
+  // console.log("详情的res.data.result：",res.data.result)
+  detailData.value = res.data.result
+  // console.log("详情页的detailData：",detailData.value.categories[1].id)
+}
+onMounted(() => getDetailData())
 
 </script>
 
 <template>
   <div class="xtx-goods-page">
-    <div class="container" >
+    <div class="container" v-if="detailData.details">
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">母婴</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋</el-breadcrumb-item>
+          <!-- 
+          错误原因：
+          goods--一开始是{}，{}.categories是undefined，所以undefined[1]报错；
+          解决：
+          方法1.可选链的语法"?."。"?"前有值才执行“.”后面的。
+          方法2.v-if手动控制渲染时机，保证只有如detailData.details中有数据才渲染
+           -->
+          <!-- 方法1 -->
+          <!-- <el-breadcrumb-item :to="{ path: `/category/${detailData.categories?.[1].id}` }">{{detailData.categories?.[1].name}}</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/category/sub/${detailData.categories?.[0].id}` }">{{ detailData.categories?.[0].name }}</el-breadcrumb-item> -->
+          <el-breadcrumb-item :to="{ path: `/category/${detailData.categories[1].id}` }">{{detailData.categories[1].name}}</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/category/sub/${detailData.categories[0].id}` }">{{ detailData.categories[0].name }}</el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -24,33 +50,33 @@
               <ul class="goods-sales">
                 <li>
                   <p>销量人气</p>
-                  <p> 100+ </p>
+                  <p> {{detailData.salesCount}}+ </p>
                   <p><i class="iconfont icon-task-filling"></i>销量人气</p>
                 </li>
                 <li>
                   <p>商品评价</p>
-                  <p>200+</p>
+                  <p>{{detailData.commentCount}}+</p>
                   <p><i class="iconfont icon-comment-filling"></i>查看评价</p>
                 </li>
                 <li>
                   <p>收藏人气</p>
-                  <p>300+</p>
+                  <p>{{detailData.collectCount}}+</p>
                   <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>400+</p>
+                  <p>{{detailData.brand?.name}}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
-              <p class="g-name">抓绒保暖 毛毛虫儿童鞋 </p>
-              <p class="g-desc"> 好穿 </p>
+              <p class="g-name">{{detailData.name}} </p>
+              <p class="g-desc"> {{detailData.desc}} </p>
               <p class="g-price">
-                <span>200</span>
-                <span> 100</span>
+                <span>{{detailData.oldPrice}}</span>
+                <span> {{detailData.price}}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -90,13 +116,13 @@
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in 3" :key="item.value">
-                      <span class="dt">白色</span>
-                      <span class="dd">纯棉</span>
+                    <li v-for="item in detailData.details.properties" :key="item.value">
+                      <span class="dt">{{ item.name }}</span>
+                      <span class="dd">{{item.value}}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  
+                  <img v-for = "img in detailData.details.pictures" :key="img" :src="img" alt="" />
                 </div>
               </div>
             </div>
