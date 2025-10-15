@@ -5,8 +5,9 @@
     <nav class="app-topnav">
         <div class="container">
             <ul>
-        <!-- 为 true 时，显示“已登录”相关内容,这里先写死，后续改-->
-        <template v-if="true">
+        <!-- 多模板渲染，区分登录状态和非登录状态 -->
+        <!-- 为 true 时，显示“已登录”相关内容。-->
+        <template v-if="false">
             <li>
                 <a href="javascript:;">
                     <i class="iconfont icon-user"></i>
@@ -25,7 +26,7 @@
         </template>
         <!-- 为 false 时，显示“未登录”相关内容 -->
         <template v-else>
-            <li><a href="javascript:;">请先登录</a></li>
+            <li><a href="javascript:;" @click="$router.push('/login')">请先登录</a></li>
             <li><a href="javascript:;">帮助中心</a></li>
             <li><a href="javascript:;">关于我们</a></li>
         </template>
