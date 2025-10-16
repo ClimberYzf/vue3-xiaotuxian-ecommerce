@@ -1,6 +1,10 @@
 <script setup>
 //表单校验（账号名+密码）
 import { ref } from 'vue'   
+import {loginAPI} from '@/apis/user'
+import {ElMessage} from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import {useRouter} from 'vue-router' //useRouter调用方法，useRoute获取参数
 //1.准备表单对象
 const form = ref({
     account: '',
@@ -34,13 +38,22 @@ const rules = {
 
 //3.获取form实例做统一校验，防止用户跳过填写表单进行校验直接点击登录。
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
+  const {account, password} = form.value  
   //调用实例方法
-  formRef.value.validate((varlid) => {
+  formRef.value.validate( async (valid) => {
     //valid: 所有表单都通过校验 才为true
     //以valid作为判断条件，通过校验才执行登录逻辑
     if (valid) {
       //TODO LOGIN
+      const res = await loginAPI({account, password})
+      console.log(res)
+      //1.提示用户，用ElMessage组件
+      ElMessage({type: 'success',message: '登录成功'})
+      //2.跳转首页-路由跳转
+      //这里用replace而不是push,是因为不需要退回到登录页面。
+      router.replace({path:'/'})
     }
   })
 }

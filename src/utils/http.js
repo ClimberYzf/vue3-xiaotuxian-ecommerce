@@ -2,6 +2,10 @@
 //1.导入 axios
 import axios from 'axios'
 
+//错误提示框 —— 统一拦截“用户不存在”的错误 
+import {ElMessage} from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+
 //2.创建一个“定制版”的 axios 实例
 const httpInstance = axios.create({
     //2.1 基础地址：所有请求都会自动拼上这个前缀
@@ -23,10 +27,18 @@ httpInstance.interceptors.request.use(function (config) {
 httpInstance.interceptors.response.use(function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
-    return response;
+    return response;     //原来每次调用接口时，我需要比视频多写.data是因为后来，视频代码这里返回的是response.data,而我这里和当时那节视频一样是写response。
   }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+
+    //关于“用户不存在”提供统一的错误提示
+    console.log("error:",error)
+    ElMessage({
+      type: 'warning',
+      message:error.response.data.message     
+
+    })
     return Promise.reject(error);
   });
 
