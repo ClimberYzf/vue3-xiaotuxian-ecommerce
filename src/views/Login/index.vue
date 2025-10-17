@@ -1,10 +1,14 @@
 <script setup>
 //表单校验（账号名+密码）
 import { ref } from 'vue'   
-import {loginAPI} from '@/apis/user'
+// import {loginAPI} from '@/apis/user'
 import {ElMessage} from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import {useRouter} from 'vue-router' //useRouter调用方法，useRoute获取参数
+import {useUserStore} from '@/stores/user'
+
+const userStore = useUserStore()
+
 //1.准备表单对象
 const form = ref({
     account: '',
@@ -47,8 +51,11 @@ const doLogin = () => {
     //以valid作为判断条件，通过校验才执行登录逻辑
     if (valid) {
       //TODO LOGIN
-      const res = await loginAPI({account, password})
-      console.log(res)
+      //a)原始写法
+      // const res = await loginAPI({account, password})
+      // console.log(res)
+      //b)用pinia管理数据
+      await userStore.getUserInfo({account, password})
       //1.提示用户，用ElMessage组件
       ElMessage({type: 'success',message: '登录成功'})
       //2.跳转首页-路由跳转
