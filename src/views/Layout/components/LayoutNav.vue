@@ -1,5 +1,6 @@
 <script setup>
-
+import {useUserStore} from '@/stores/user'
+const userStore = useUserStore()
 
 </script>
 
@@ -9,11 +10,12 @@
             <ul>
         <!-- 多模板渲染，区分登录状态和非登录状态 -->
         <!-- 为 true 时，显示“已登录”相关内容。-->
-        <template v-if="false">
+         <!-- 适配思路：登录时显示第一块，非登录时显示第二块。关键在是否有token,有则登录，无则未登录。-->
+        <template v-if="userStore.userInfo.token">
             <li>
                 <a href="javascript:;">
                     <i class="iconfont icon-user"></i>
-                    周深                    
+                    {{ userStore.userInfo.account}}                    
                 </a>
             </li>
             <li>
