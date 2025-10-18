@@ -6,6 +6,8 @@ import axios from 'axios'
 import {ElMessage} from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
+import { useUserStore } from '@/stores/user'
+
 //2.创建一个“定制版”的 axios 实例
 const httpInstance = axios.create({
     //2.1 基础地址：所有请求都会自动拼上这个前缀
@@ -16,6 +18,13 @@ const httpInstance = axios.create({
 
 // 添加请求拦截器
 httpInstance.interceptors.request.use(function (config) {
+    //1.从pinia获取token数据
+    const userStore = useUserStore()    
+    //2.按照后端的要求拼接token数据
+    const token = userStore.userInfo.token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}` //后端要求的写法
+    }
     // 在发送请求之前做些什么
     return config;
   }, function (error) {
