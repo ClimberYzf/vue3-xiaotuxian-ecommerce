@@ -1,4 +1,4 @@
-//管理用户数据相关
+//管理用户数据相关（包括清楚用户信息）
 
 import {defineStore} from 'pinia'
 import {loginAPI} from '@/apis/user'
@@ -12,10 +12,16 @@ export const useUserStore = defineStore('user', ()=>{
         const res = await loginAPI({account, password})
         userInfo.value = res.data.result
     }
+    //退出时清除用户信息
+    const clearUserInfo = () => {
+        userInfo.value = {}
+    }
+
     //3.以对象的格式把state和action return出去
     return {
         userInfo,
-        getUserInfo
+        getUserInfo,
+        clearUserInfo
     }     
 },
 {
