@@ -7,6 +7,8 @@ import {ElMessage} from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
 import { useUserStore } from '@/stores/user'
+import router from '@/router'
+
 
 //2.创建一个“定制版”的 axios 实例
 const httpInstance = axios.create({
@@ -38,16 +40,27 @@ httpInstance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     return response;     //原来每次调用接口时，我需要比视频多写.data是因为后来，视频代码这里返回的是response.data,而我这里和当时那节视频一样是写response。
   }, function (error) {
+    const userStore = useUserStore()  
+
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
 
     //关于“用户不存在”提供统一的错误提示
-    console.log("error:",error)
+    // console.log("error:",error)
     ElMessage({
       type: 'warning',
       message:error.response.data.message     
 
     })
+
+    //401 token失效处理
+    //1.清除本地用户数据
+    //2.跳转到登录页
+    if (error.response.status === 401) {
+      userStore.clearUserInfo()
+      router.push('/login')
+    }
+
     return Promise.reject(error);
   });
 
