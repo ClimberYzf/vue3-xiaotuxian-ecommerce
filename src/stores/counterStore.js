@@ -1,3 +1,4 @@
+//只是测试用，和项目无关。
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 

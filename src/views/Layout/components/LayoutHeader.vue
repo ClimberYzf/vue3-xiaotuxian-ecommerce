@@ -1,6 +1,6 @@
 <script setup>
 import LayoutHeaderUl from './LayoutHeaderUl.vue';
-
+import HeaderCart from '@/views/Layout/components/HeaderCart.vue'
 </script>
 <template>
     <!-- Header -->
@@ -20,7 +20,7 @@ import LayoutHeaderUl from './LayoutHeaderUl.vue';
                 <input type="text" placeholder="搜一搜">
             </div>
             <!-- 头部购物车 -->
-            <!-- <HeaderCart /> -->
+            <HeaderCart />
         </div>
     </header>
 </template>

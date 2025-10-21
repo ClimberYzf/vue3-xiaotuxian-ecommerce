@@ -7,7 +7,7 @@ import {categoryData} from '@/mock/category'
 import { onMounted, ref } from 'vue'
 
 //M3.
-import { useCategoryStore } from '@/stores/category'
+import { useCategoryStore } from '@/stores/categoryStore'
 
 const categoryList = ref([]) 
 

@@ -1,6 +1,6 @@
 <script setup>
     //M1.使用Pinia的数据
-    import { useCategoryStore } from '@/stores/category';
+    import { useCategoryStore } from '@/stores/categoryStore';
 
     //M2.使用mock数据
     import {categoryData} from '@/mock/category' 
