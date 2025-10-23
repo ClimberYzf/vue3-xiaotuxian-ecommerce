@@ -9,9 +9,9 @@ const route = useRoute()
 const payInfo = ref({})
 const getPayInfo = async () => {
   const res = await getOrderAPI(route.query.id)
-  payInfo.value = res.result
+  payInfo.value = res.data.result
   // 初始化倒计时秒数
-  start(res.result.countdown)
+  start(res.data.result.countdown)
 }
 onMounted(() => getPayInfo())
 

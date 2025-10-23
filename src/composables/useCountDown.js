@@ -1,7 +1,7 @@
 // 存通用的逻辑函数 
 
 //封装倒计时逻辑函数
-import { ref } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import dayjs from 'dayjs'
 export const useCountDown = () => {
     //1.响应式的数据

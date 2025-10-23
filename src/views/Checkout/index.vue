@@ -9,8 +9,10 @@ const router = useRouter()
 const checkInfo = ref({}) // 订单对象
 const curAddress = ref({}) // 默认地址
 const getCheckInfo = async () => {
+  console.log("getCheckInfo被调用了")
   const res = await getCheckInfoAPI()
-  checkInfo.value = res.result
+  checkInfo.value = res.data.result
+  console.log("checkInfo", checkInfo.value)
   // 适配默认地址
   // 从地址列表中筛选出来 isDefault === 0 那一项
   const item = checkInfo.value.userAddresses.find(item => item.isDefault === 0)
@@ -36,6 +38,8 @@ const confirm = () => {
 
 // 创建订单
 const createOrder = async () => {
+  console.log("createOrder被调用了")
+  //这里的checkInfo只有一件商品？？？好像是总少一件？？？
   const res = await createOrderAPI({
     deliveryTimeType: 1,
     payType: 1,
@@ -49,7 +53,7 @@ const createOrder = async () => {
     }),
     addressId: curAddress.value.id
   })
-  const orderId = res.result.id
+  const orderId = res.data.result.id
   router.push({
     path: '/pay',
     query: {

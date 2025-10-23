@@ -15,7 +15,7 @@ const httpInstance = axios.create({
     //2.1 基础地址：所有请求都会自动拼上这个前缀
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
     //2.2 超时时间：请求发出去后，5秒内没响应就判定“失败”
-    timeout: 5000
+    timeout: 5000000  //延长时间
 })
 
 // 添加请求拦截器
@@ -24,6 +24,7 @@ httpInstance.interceptors.request.use(function (config) {
     const userStore = useUserStore()    
     //2.按照后端的要求拼接token数据
     const token = userStore.userInfo.token
+    console.log("发送请求时已经有token： ",token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}` //后端要求的写法
     }
@@ -35,6 +36,7 @@ httpInstance.interceptors.request.use(function (config) {
   });
 
 // 添加响应拦截器, 未来有业务再补充代码，先搭建基础的框架
+// httpInstance.interceptors.response.use(“成功响应处理”的回调函数, “失败响应处理”的回调函数)
 httpInstance.interceptors.response.use(function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
@@ -47,16 +49,18 @@ httpInstance.interceptors.response.use(function (response) {
 
     //关于“用户不存在”提供统一的错误提示
     // console.log("error:",error)
+    console.log("ElMessage有问题吗？error.response.data.message : ",error.response )
     ElMessage({
       type: 'warning',
-      message:error.response.data.message     
+      // 不知道为什么这里在报错，加？
+      message:error?.response?.data?.message     
 
     })
 
     //401 token失效处理
     //1.清除本地用户数据
     //2.跳转到登录页
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       userStore.clearUserInfo()
       router.push('/login')
     }
