@@ -44,4 +44,6 @@ export default defineConfig({
       },
     },
   },
+  // 设置为github仓库名
+  base: '/vue3-xiaotuxian-ecommerce/'
 })
