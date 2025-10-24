@@ -23,7 +23,7 @@ const getOrderList = async () => {
   const res = await getUserOrder(params.value)
   console.log("getUserOrder返回的res:", res)
   orderList.value = res.data.result.items
-  total.value = res.data.result.counts  //总数好像是历史购买的总数，不过是接口返回的数据，好像和我操作无关。
+  total.value = res.data.result.counts  //总数好像是历史购买的总数，不过是接口返回的数据，和我操作无关。
 }
 
 onMounted(() => getOrderList())

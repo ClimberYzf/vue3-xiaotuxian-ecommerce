@@ -48,3 +48,13 @@ export const getGoodsAPI = () => {
     url: '/home/goods'
   })
 }
+
+
+/**补充：
+ * @description:商品库存查询
+ */
+export const checkGoodsStockAPI = (skuID) => {
+    return httpInstance({
+        url: `/goods/stock/${skuID}`
+    })
+}

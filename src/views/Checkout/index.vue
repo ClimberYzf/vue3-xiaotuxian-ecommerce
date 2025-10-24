@@ -38,8 +38,7 @@ const confirm = () => {
 
 // 创建订单
 const createOrder = async () => {
-  console.log("createOrder被调用了")
-  //这里的checkInfo只有一件商品？？？好像是总少一件？？？
+  // console.log("createOrder被调用了")
   const res = await createOrderAPI({
     deliveryTimeType: 1,
     payType: 1,
@@ -113,7 +112,7 @@ const createOrder = async () => {
                   </a>
                 </td>
                 <td>&yen;{{ i.price }}</td>
-                <td>{{ i.price }}</td>
+                <td>{{ i.count }}</td>  
                 <td>&yen;{{ i.totalPrice }}</td>
                 <td>&yen;{{ i.totalPayPrice }}</td>
               </tr>

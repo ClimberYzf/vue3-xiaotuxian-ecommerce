@@ -33,8 +33,8 @@ const confirm = () => {
                     </template>
                 </el-popconfirm>
             </li>
-            <li><a href="javascript:;">我的订单</a></li>
-            <li><a href="javascript:;">会员中心</a></li>
+            <li><a href="javascript:;"  @click="$router.push('/member/order')">我的订单</a></li>
+            <li><a href="javascript:;"  @click="$router.push('/member')">会员中心</a></li>
         </template>
         <!-- 为 false 时，显示“未登录”相关内容 -->
         <template v-else>

@@ -3,11 +3,15 @@ import { defineStore } from "pinia"
 import {ref, computed} from 'vue'
 import { useUserStore } from "./userStore"
 import {insertCartAPI, findNewCartListAPI, delCartAPI} from "@/apis/cart"
+import {checkGoodsStockAPI} from "@/apis/home"
+
 export const useCartStore = defineStore('cart', ()=>{
     const userStore = useUserStore()
     const isLogin = computed(()=>userStore.userInfo.token)
     //1.定义state - cartList
     const cartList = ref([])
+    // 错误信息
+    // const errorMsg = ref('') 
     
     //获取最新购物车列表action
     const updateNewList = async () => {
@@ -20,8 +24,19 @@ export const useCartStore = defineStore('cart', ()=>{
         const {skuId, count} = goods
         if (isLogin.value) {
             //登录下：
-            await insertCartAPI({skuId, count})
-            updateNewList()
+            //判断该商品是否有库存
+            // const res = await checkGoodsStockAPI(skuId)
+            // console.log("库存返回的res:",res)
+            // if (res.data.result.isEffective & res.data.result.stock >= count){
+                //商品有效 且 库存足够，可以添加到购物车
+                await insertCartAPI({skuId, count})
+                updateNewList()
+                // return true
+            // }else{
+            //     //商品无效 或 库存不足
+            //     errorMsg.value = '商品无效 或 库存不足'
+            //     return false
+            // }            
         }else {
             //未登录下：
             //添加购物车操作
