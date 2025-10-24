@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    //这里的@仅作联想提示，不做实际的路径转换
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "exclude": ["node_modules", "dist"]
-}
