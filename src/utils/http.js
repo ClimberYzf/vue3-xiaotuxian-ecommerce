@@ -13,7 +13,7 @@ import router from '@/router'
 //2.创建一个“定制版”的 axios 实例
 const httpInstance = axios.create({
     //2.1 基础地址：所有请求都会自动拼上这个前缀
-    baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
+    baseURL: 'https://pcapi-xiaotuxian-front-devtest.itheima.net',
     //2.2 超时时间：请求发出去后，5秒内没响应就判定“失败”
     timeout: 15000  //获取订单是慢响应，从原先的5秒延长至15秒
 })
